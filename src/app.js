@@ -1,26 +1,38 @@
 function electionData() {
+  
+  let stateNameElement = document.querySelector("#state-name");
+  let winningPartyElement = document.querySelector("#winning-party");
+
+
 
   function printStateName(response) {
-    console.log(response.data.states[0].state.localisedItems[1].longName);
+    stateNameElement.innerHTML = (response.data.states[0].state.localisedItems[1].longName);
   }
 
   function printPartyResults(response) {
     results = response.data.stateResults[0].stateResult.resultItems;
+    let resultsElement = document.querySelector("#results");
+    let resultsHTML = "";
     results.forEach(function(party) {
       votes = party.localisedItems[1].votes;
-      // candidate = party.localisedItems[1].candName;
       votesAsPercentage = Math.round(party.share);
+      partyName = printPartyName(party.partyCode);
+      
+      resultsHTML += 
+      `<li>${partyName} party</li>
+      <li>${votes} votes</li>
+      <li>${votesAsPercentage}%</li>`;
       console.log(votes)
-      // console.log(candidate)
       console.log(votesAsPercentage)
-      partyName = printPartyName(party.partyCode)
+      
     })
+    resultsElement.innerHTML = resultsHTML;
   }
 
   function getPartyName(response) {
 
-    partyCode = (response.data.stateResults[0].stateResult.oldPartyCode)
-    printPartyName(partyCode)
+    partyCode = (response.data.stateResults[0].stateResult.oldPartyCode);
+    winningPartyElement.innerHTML = printPartyName(partyCode);
 
     printPartyResults(response)
 
@@ -39,8 +51,8 @@ function electionData() {
         partyName = "Other";
         break;
     }
-    console.log(partyName)
     return partyName
+
   }
 
 
@@ -55,8 +67,11 @@ function electionData() {
     }).then(methodName)
   }
 
+
   api_test("states/", printStateName)
   api_test("presidential/stateresults/", getPartyName)
+
+
 }
 
 electionData()
