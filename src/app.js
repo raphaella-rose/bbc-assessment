@@ -63,7 +63,7 @@ function electionData(response) {
 
   }
 
-
+  document.getElementById("button-list").style.display = 'none';
   stateCode = chooseState(response, name);
   printStateName(response, stateCode);
   api_test("presidential/stateresults/", getPartyName)
