@@ -1,3 +1,4 @@
+function setUserChoice(name) {
 function electionData(response) {
 
   let stateNameElement = document.querySelector("#state-name");
@@ -63,10 +64,11 @@ function electionData(response) {
   }
 
 
-  stateCode = chooseState(response, "Texas");
+  stateCode = chooseState(response, name);
   printStateName(response, stateCode);
   api_test("presidential/stateresults/", getPartyName)
-  
+  }
+  api_test("states/", electionData)
 }
 
 function api_test(call, methodName) {
@@ -80,7 +82,24 @@ function api_test(call, methodName) {
   }).then(methodName)
 }
 
-api_test("states/", electionData)
+
+function showButtons(response) {
+  let buttonContainer = document.querySelector("#button-list");
+  let buttonsHTML = "";
+  response.data.states.forEach(function(state) {
+    buttonsHTML += 
+    `<li><button onClick="setUserChoice('${state.state.localisedItems[1].longName}')">${state.state.localisedItems[1].longName}</button></li>`
+  })
+  buttonContainer.innerHTML = buttonsHTML;
+}
+
+api_test("states/", showButtons)
+
+
+
+  
+
+
 
 
 
