@@ -1,5 +1,5 @@
-function electionData() {
-  
+function electionData(response) {
+
   let stateNameElement = document.querySelector("#state-name");
   let winningPartyElement = document.querySelector("#winning-party");
 
@@ -10,7 +10,6 @@ function electionData() {
         return i;
       }
     };
-  
   }
 
   function printStateName(response, stateCode) {
@@ -19,8 +18,7 @@ function electionData() {
 
 
   function printPartyResults(response) {
-    
-    results = response.data.stateResults[0].stateResult.resultItems;
+    results = response.data.stateResults[stateCode].stateResult.resultItems;
     let resultsElement = document.querySelector("#results");
     let resultsHTML = "";
     results.forEach(function(party) {
@@ -40,7 +38,7 @@ function electionData() {
 
   function getPartyName(response) {
 
-    partyCode = (response.data.stateResults[0].stateResult.oldPartyCode);
+    partyCode = (response.data.stateResults[stateCode].stateResult.oldPartyCode);
     winningPartyElement.innerHTML = printPartyName(partyCode);
 
     printPartyResults(response)
@@ -64,31 +62,26 @@ function electionData() {
 
   }
 
-  function api_test(call, methodName) {
-   
-    let apiKey = "6841a8f6eab8ec70512df6bf3950a0cd51d4f9b7373b9df5";
-    let apiUrl = `https://jse-assignment.herokuapp.com/USElection/${call}`;
-    axios.get(apiUrl, {
-      headers: {
-        'x-api-key': apiKey
-      }
-    }).then(methodName)
-  }
-  
 
-
-  api_test("states/", dataController)
+  stateCode = chooseState(response, "Texas");
+  printStateName(response, stateCode);
   api_test("presidential/stateresults/", getPartyName)
   
-
-  function dataController(response) {
-    stateCode = chooseState(response, "Alaska");
-    printStateName(response, stateCode);
-  }
-
 }
 
-electionData()
+function api_test(call, methodName) {
+   
+  let apiKey = "6841a8f6eab8ec70512df6bf3950a0cd51d4f9b7373b9df5";
+  let apiUrl = `https://jse-assignment.herokuapp.com/USElection/${call}`;
+  axios.get(apiUrl, {
+    headers: {
+      'x-api-key': apiKey
+    }
+  }).then(methodName)
+}
+
+api_test("states/", electionData)
+
 
 
 
