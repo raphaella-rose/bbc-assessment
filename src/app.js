@@ -20,27 +20,45 @@ function electionData(response) {
 
   function printPartyResults(response) {
     results = response.data.stateResults[stateCode].stateResult.resultItems;
-    let resultsElement = document.querySelector("#results");
-    let resultsHTML = "";
-    results.forEach(function(party) {
-      votes = party.localisedItems[1].votes;
-      votesAsPercentage = Math.round(party.share);
-      partyName = printPartyName(party.partyCode);
-      
-      resultsHTML += 
-      `<li>${partyName} party</li>
-      <li>${votes} votes</li>
-      <li>${votesAsPercentage}%</li>`;
-   
-      
-    })
-    resultsElement.innerHTML = resultsHTML;
+    function colorPicker(party) {
+      switch (party) {
+        case "Republican":
+          return '#E9151E';
+ 
+        case "Democrat":
+          return '#0000FF';
+  
+        case "Other":
+          return '#75AA5E';
+       
+      }
+    }
+
+
+    JSC.Chart('chartDiv', {
+      type: 'horizontal column aqua',
+      yAxis_label_text: "Number of votes",
+      fillStyle: '#EEEEEE',
+      series: [
+        {
+          type: 'column',
+          name: 'Total Votes',
+          points: [
+            {x: `${printPartyName(results[0].partyCode)} Party`, y: results[0].votes, color: colorPicker(printPartyName(results[0].partyCode))},
+            {x:  `${printPartyName(results[1].partyCode)} Party`, y: results[1].votes, color: colorPicker(printPartyName(results[1].partyCode))},
+            {x:  `${printPartyName(results[2].partyCode)}`, y: results[2].votes, color: colorPicker(printPartyName(results[2].partyCode))}
+          ]
+        }
+      ]
+
+  });
+
   }
 
   function getPartyName(response) {
 
     partyCode = (response.data.stateResults[stateCode].stateResult.oldPartyCode);
-    winningPartyElement.innerHTML = printPartyName(partyCode);
+    winningPartyElement.innerHTML = `Winning Party: ${printPartyName(partyCode)} Party`;
 
     printPartyResults(response)
 
@@ -63,7 +81,7 @@ function electionData(response) {
 
   }
 
-  document.getElementById("button-list").style.display = 'none';
+  // document.getElementById("button-list").style.display = 'none';
   stateCode = chooseState(response, name);
   printStateName(response, stateCode);
   api_test("presidential/stateresults/", getPartyName)
@@ -87,17 +105,16 @@ function showButtons(response) {
   let buttonContainer = document.querySelector("#button-list");
   let buttonsHTML = "";
   response.data.states.forEach(function(state) {
-    buttonsHTML += 
-    `<li><button onClick="setUserChoice('${state.state.localisedItems[1].longName}')">${state.state.localisedItems[1].longName}</button></li>`
-  })
+   if (!state.state.localisedItems[1].longName.includes("District")) {
+      buttonsHTML += 
+      `<li><button onClick="setUserChoice('${state.state.localisedItems[1].longName}')">${state.state.localisedItems[1].longName}</button></li>`
+  }});
   buttonContainer.innerHTML = buttonsHTML;
 }
 
 api_test("states/", showButtons)
 
 
-
-  
 
 
 

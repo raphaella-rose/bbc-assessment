@@ -1,0 +1,32 @@
+body {
+  background: #EEEEEE;
+}
+.container {
+  font-family: 'Roboto', sans-serif;
+  margin: 100px 20px 50px;
+}
+
+.container h2 {
+  color: #222831;
+  font-size: 50px;
+}
+
+.container h3 {
+  color: #393E46;
+  font-size: 25px;
+}
+
+.chart-wrapper {
+  background-color: white;
+  border: 3px solid #0092CA;
+  border-radius: 8px;
+  margin: 0 auto;
+  max-width: 75%;
+}
+
+.chart {
+  height: 350px; 
+  margin: 0 auto;
+  padding: 45px 0;
+  width: 75%; 
+}
