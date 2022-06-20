@@ -1,8 +1,33 @@
 body {
   background: #EEEEEE;
+  font-family: 'Roboto', sans-serif;
+}
+
+#button-list {
+  list-style: none;
+}
+
+#button-list li {
+  margin: 4px 0;
+}
+
+button {
+  background-color: #222831;
+  border: 1px solid #222831;
+  border-radius: 8px;
+  color: #EEEEEE;
+  font-size: 15px;
+  padding: 4px 6px;
+  transition: ease-in-out 100ms;
+}
+
+button:hover {
+  background-color: #393e46;
+  border: 1px solid #393e46;
+  border-radius: 8px;
+  color: #EEEEEE;
 }
 .container {
-  font-family: 'Roboto', sans-serif;
   margin: 100px 20px 50px;
 }
 
@@ -29,4 +54,25 @@ body {
   margin: 0 auto;
   padding: 45px 0;
   width: 75%; 
+}
+
+.button-wrapper {
+  margin: 30px;
+}
+
+.button-wrapper button {
+  background-color: #0092CA;
+  border: 1px solid #0092CA;
+  border-radius: 8px;
+  color: #222831;
+  font-size: 15px;
+  padding: 4px 6px;
+  transition: ease-in-out 100ms;
+}
+
+.button-wrapper button:hover {
+  background-color: #393e46;
+  border: 1px solid #393e46;
+  border-radius: 8px;
+  color: #0092CA;
 }

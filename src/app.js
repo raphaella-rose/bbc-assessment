@@ -82,7 +82,9 @@ function setUserChoice(name) {
 
     }
 
-    // document.getElementById("button-list").style.display = 'none';
+    document.getElementById("button-list").style.display = 'none';
+    document.getElementById("chart-wrapper").style.display = 'block';
+    document.getElementById("return-button").style.display = 'block';
     stateCode = chooseState(response, name);
     printStateName(response, stateCode);
     api_test("presidential/stateresults/", getPartyName)
@@ -101,8 +103,17 @@ function setUserChoice(name) {
     }).then(methodName)
   }
 
+  function backToStates() {
+    document.getElementById("chart-wrapper").style.display = 'none';
+    document.getElementById("state-info").style.display = 'none';
+    document.getElementById("button-list").style.display = 'block';
+    document.getElementById("return-button").style.display = 'none';
+
+  }
 
   function showButtons(response) {
+    document.getElementById("chart-wrapper").style.display = 'none';
+    document.getElementById("return-button").style.display = 'none';
     let buttonContainer = document.querySelector("#button-list");
     let buttonsHTML = "";
     response.data.states.forEach(function(state) {

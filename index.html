@@ -15,15 +15,20 @@
 
   <ul id="button-list"></ul>
 
-  <div class="container">
+  <div class="button-wrapper">
+    <button id="return-button" onclick="backToStates()">Back to state list</button>
+  </div>
+  
+  <div id="state-info" class="container">
     <h2 id="state-name"></h2>
     <h3 id="winning-party"></h3>
   </div>
+
   
-  <div class="chart-wrapper">
+  <div id="chart-wrapper" class="chart-wrapper">
     <div id="chartDiv" class="chart"></div>
   </div>
-
+  
 
   <script type='text/javascript' src='config.js'></script>
   <script src="https://code.jscharting.com/2.9.0/jscharting.js"></script>
